@@ -22,10 +22,18 @@ const Formulario = () => {
     //extraer valores
     const {mascota,propietario,fecha,hora,sintomas} = cita;
 
+    //Cuando el usuario presiona agregar cita
+    const submitCita = (e) => {
+        e.preventDefault();
+        console.log("Enviar form");
+    }
+
     return (
         <Fragment>
             <h2>Crear cita</h2>
-            <form>
+            <form
+                onSubmit={submitCita}
+            >
                 <label>Nombre Mascota</label>
                 <input
                     type="text"
