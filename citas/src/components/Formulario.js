@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import uuid from 'react-uuid';
 
 const Formulario = () => {
 
@@ -12,7 +13,7 @@ const Formulario = () => {
     });
 
     //State de errores
-    const [error,actualizarError] = useState(false);
+    const [error, actualizarError] = useState(false);
 
     //funcion que se ejecuta cada que el usuario escribe
     const actualizarState = (e) => {
@@ -32,9 +33,17 @@ const Formulario = () => {
         //validar
         if (mascota.trim() === '' || propietario.trim() === '' || fecha.trim() === '' ||
             hora.trim() === '' || sintomas.trim() === '') {
-                actualizarError(true);
-                return false;
+            actualizarError(true);
+            return false;
         }
+
+        //eliminar mensaje de previo
+        actualizarError(false);
+
+        //asignar in ID
+        cita.id = uuid();
+        //crear cita
+        console.log(cita);
     }
 
     return (
