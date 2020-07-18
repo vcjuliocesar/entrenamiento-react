@@ -12,10 +12,11 @@ function App() {
   }
 
   //Arreglo de citas
-  const [citas, guardarCitas] = useState([citasIniciales]);
+  const [citas, guardarCitas] = useState(citasIniciales);
   
   //Use Effect para realizar ciertas operaciones cuando el state cambia
   useEffect(()=>{
+    let citasIniciales = JSON.parse(localStorage.getItem('citas'));
     console.log('Documento listo o algo paso con las citas');
     if(citasIniciales){
       localStorage.setItem('citas',JSON.stringify(citas));
