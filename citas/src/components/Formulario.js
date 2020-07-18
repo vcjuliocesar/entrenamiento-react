@@ -1,36 +1,46 @@
-import React, { Fragment,useState } from 'react';
+import React, { Fragment, useState } from 'react';
 
 const Formulario = () => {
 
     // Crear State de Citas
-    const [cita,actualizarCita] = useState({
-        mascota:'',
-        propietario:'',
-        fecha:'',
-        hora:'',
-        sintomas:''
+    const [cita, actualizarCita] = useState({
+        mascota: '',
+        propietario: '',
+        fecha: '',
+        hora: '',
+        sintomas: ''
     });
+
+    //State de errores
+    const [error,actualizarError] = useState(false);
 
     //funcion que se ejecuta cada que el usuario escribe
     const actualizarState = (e) => {
         actualizarCita({
             ...cita,
-            [e.target.name] : e.target.value
+            [e.target.name]: e.target.value
         })
     }
 
     //extraer valores
-    const {mascota,propietario,fecha,hora,sintomas} = cita;
+    const { mascota, propietario, fecha, hora, sintomas } = cita;
 
     //Cuando el usuario presiona agregar cita
     const submitCita = (e) => {
         e.preventDefault();
-        console.log("Enviar form");
+
+        //validar
+        if (mascota.trim() === '' || propietario.trim() === '' || fecha.trim() === '' ||
+            hora.trim() === '' || sintomas.trim() === '') {
+                actualizarError(true);
+                return false;
+        }
     }
 
     return (
         <Fragment>
             <h2>Crear cita</h2>
+            {error ? <p className="alerta-error">Todos los campos son obligatorios</p> : null}
             <form
                 onSubmit={submitCita}
             >
@@ -70,15 +80,15 @@ const Formulario = () => {
                 />
                 <label>Síntomas</label>
                 <textarea
-                    className = "u-full-width"
-                    name = "sintomas"
+                    className="u-full-width"
+                    name="sintomas"
                     onChange={actualizarState}
-                    value = {sintomas}
+                    value={sintomas}
                 >
                 </textarea>
                 <button
-                    type = "submit"
-                    className = "u-full-width button-primary"
+                    type="submit"
+                    className="u-full-width button-primary"
                 >Agregar Cita</button>
             </form>
         </Fragment>
