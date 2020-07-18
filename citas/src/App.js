@@ -4,12 +4,24 @@ import Cita from './components/Cita';
 
 function App() {
 
+  //Citas en local storage
+  let citasIniciales = JSON.parse(localStorage.getItem('citas'));
+  
+  if(!citasIniciales){
+    citasIniciales = [];
+  }
+
   //Arreglo de citas
-  const [citas, guardarCitas] = useState([]);
+  const [citas, guardarCitas] = useState([citasIniciales]);
   
   //Use Effect para realizar ciertas operaciones cuando el state cambia
   useEffect(()=>{
     console.log('Documento listo o algo paso con las citas');
+    if(citasIniciales){
+      localStorage.setItem('citas',JSON.stringify(citas));
+    } else {
+      localStorage.setItem('citas',JSON.stringify([]));
+    }
   },[citas]);
 
   //funcion que que toma las citas actuales y agrege la nueva
@@ -22,8 +34,8 @@ function App() {
     const nuevasCitas = citas.filter(cita => cita.id !== id);
     guardarCitas(nuevasCitas);
   }
-
-  const titulo = (citas.length > 0) ? 'Administra tus citas' : 'No hay citas';
+  
+  const titulo = citas.length === 0 ? 'No hay citas' :'Administra tus citas';
 
   return (
     <Fragment>
