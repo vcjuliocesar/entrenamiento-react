@@ -18,6 +18,8 @@ function App() {
     guardarCitas(nuevasCitas);
   }
 
+  const titulo = (citas.length > 0) ? 'Administra tus citas' : 'No hay citas';
+
   return (
     <Fragment>
       <h1>Administrador de pacientes</h1>
@@ -29,16 +31,17 @@ function App() {
             />
           </div>
           <div className="one-half column">
-            <h1>Administra tus citas</h1>
+            <h1>{titulo}</h1>
             {citas.map((cita) => {
               return (
-                <Cita 
+                <Cita
                   key={cita.id}
                   cita={cita}
-                  eliminarCita={eliminarCita}/>
-            )
+                  eliminarCita={eliminarCita} 
+                />
+              )
             })}
-            
+
           </div>
         </div>
       </div>
