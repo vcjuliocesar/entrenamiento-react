@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import Error from './Error';
 
 const Pregunta = () => {
     //definir estate
@@ -11,7 +12,7 @@ const Pregunta = () => {
 
     //submit para definir el presupuesto
     const agregarPresupuesto = (e) => {
-        e.eventPreventDefault();
+        e.preventDefault();
 
         //validar
         if (cantidad < 1 || isNaN(cantidad)) {
@@ -27,7 +28,7 @@ const Pregunta = () => {
     return (
         <Fragment>
             <h2>Coloca tu presupuesto</h2>
-            {error ? "mensaje de error" : null}
+            {error ? <Error mensaje="El Presupuesto es incorrecto" /> : null}
             <form
                 onSubmit={agregarPresupuesto}
             >
