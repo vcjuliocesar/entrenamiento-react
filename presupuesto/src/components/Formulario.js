@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Error from './Error';
+import shortid from 'shortid';
 
 const Formulario = () => {
 
@@ -12,13 +13,20 @@ const Formulario = () => {
 
         //validar)
 
-        if (cantidad < 1 || isNaN(cantidad) || cantidad.trim() === '') {
+        if (cantidad < 1 || isNaN(cantidad) || nombre.trim() === '') {
             guardarError(true);
             return;
         }
 
         //guardar gasto
-        guardarError(false);
+        guardarError(false);    
+        const gasto = {
+            nombre:nombre,
+            cantidad:cantidad,
+            id:shortid.generate()
+        }
+
+        console.log(gasto);     
 
         //pasar datos al componente principal
 
