@@ -1,17 +1,24 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
+import Error from './Error';
 
 const Formulario = () => {
 
-    const[nombre,guardarNombre] = useState('');
-    const[cantidad,guardarCantidad] = useState(0);
-
+    const [nombre, guardarNombre] = useState('');
+    const [cantidad, guardarCantidad] = useState(0);
+    const [error, guardarError] = useState(false);
     //cuando el usuario agrega un gasto
     const agregarGasto = (e) => {
         e.preventDefault();
-        
-        //validar
+
+        //validar)
+
+        if (cantidad < 1 || isNaN(cantidad) || cantidad.trim() === '') {
+            guardarError(true);
+            return;
+        }
 
         //guardar gasto
+        guardarError(false);
 
         //pasar datos al componente principal
 
@@ -19,11 +26,12 @@ const Formulario = () => {
 
     }
 
-    return(
+    return (
         <form
             onSubmit={agregarGasto}
         >
             <h2>Agrega tus gastos aquí</h2>
+            {error ? <Error mensaje = "Ambos campos son obligatorios o Presupuesto incorrecto"/> : null}
             <div className="campo">
                 <label>Nombre gasto</label>
                 <input
@@ -33,7 +41,7 @@ const Formulario = () => {
                     value={nombre}
                     onChange={e => guardarNombre(e.target.value)}
                 />
-            </div> 
+            </div>
             <div className="campo">
                 <label>Cantidad gasto</label>
                 <input
@@ -41,10 +49,10 @@ const Formulario = () => {
                     className="u-full-width"
                     placeholder="Ej. 300"
                     value={cantidad}
-                    onChange={e => guardarCantidad(parseInt(e.target.value,10))}
+                    onChange={e => guardarCantidad(parseInt(e.target.value, 10))}
                 />
-            </div> 
-            <input 
+            </div>
+            <input
                 type="submit"
                 className="button-primary u-full-width"
                 value="Agregar gasto"
