@@ -31,7 +31,7 @@ function App() {
       //reset a false
       guardarCrearGasto(false);
     }
-  }, [gasto]);
+  }, [gasto,creargasto,gastos,restante]);
 
   //cuando el usuario agrege un  uevo gasto
   /*const agregarNuevoGasto = (gasto) => {
