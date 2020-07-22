@@ -15,10 +15,19 @@ function App() {
   const { ciudad, pais } = busqueda;
 
   useEffect(() => {
-    const consultarAPI = async () =>{
-        //http://api.openweathermap.org/data/2.5/weather?q=guadalajara,mexico&appid=c11a5e2033f0f29d1b7944c7a5563668
-      //1c69ab7a70f7b1d748254c0fc63354ad
+    const consultarAPI = async () => {
+      if (consultar) {
+        const appId = '1c69ab7a70f7b1d748254c0fc63354ad';
+        const url = `http://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appId}`;
+        const respuesta = await fetch(url);
+        const resultado = await respuesta.json();
+        console.log(resultado);
+        //guardarConsultar(false);
+      }
+
+      //http://api.openweathermap.org/data/2.5/weather?q=guadalajara,mexico&appid=1c69ab7a70f7b1d748254c0fc63354ad
     }
+    consultarAPI();
   }, [consultar]);
 
   return (
