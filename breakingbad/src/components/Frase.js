@@ -10,7 +10,7 @@ const ContenedorFrase = styled.div`
     @media(min-width:992px){
         margin-top:10rem;
     }
-
+    
     h1{
         font-family:Arial, Helvetica, sans-serif;
         text-align:center;
