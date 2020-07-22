@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import useMoneda from '../hooks/useMoneda';
 import useCriptomoneda from '../hooks/useCriptomoneda';
+import axios from 'axios';
 
 const Boton = styled.input`
     margin-top:20px;
@@ -22,23 +23,37 @@ const Boton = styled.input`
 `;
 
 const Formulario = () => {
-    const MONEDAS = [
-        {codigo:'USD',nombre:'Dolar de estados Unidos'},
-        {codigo:'MXN',nombre:'Peso Mexicano'},
-        {codigo:'EUR',nombre:'Euro'},
-        {codigo:'GBP',nombre:'Libra Esterlina'},
-    ];
-    
-    //utilizar useMoneda
-    const [moneda,SelectMonedas] = useMoneda('Elige tu moneda','',MONEDAS);
-    
-    //utilozar useCriptomoneda
-    const [criptomoneda,SeleccionarCripto] = useCriptomoneda('Elige tu Criptomoneda','');
 
-    return (  
+    //state del listado de criptomonedas 
+    const [listacripto,guardarCriptomonedas] = useState([]);
+
+    const MONEDAS = [
+        { codigo: 'USD', nombre: 'Dolar de estados Unidos' },
+        { codigo: 'MXN', nombre: 'Peso Mexicano' },
+        { codigo: 'EUR', nombre: 'Euro' },
+        { codigo: 'GBP', nombre: 'Libra Esterlina' },
+    ];
+
+    //utilizar useMoneda
+    const [moneda, SelectMonedas] = useMoneda('Elige tu moneda', '', MONEDAS);
+
+    //utilozar useCriptomoneda
+    const [criptomoneda, SeleccionarCripto] = useCriptomoneda('Elige tu Criptomoneda', '',listacripto);
+
+    //ejecutar llamado a la API
+    useEffect(() => {
+        const consultarAPI = async () => {
+            const url = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD';
+            const resultado = await axios.get(url);
+            guardarCriptomonedas(resultado.data.Data);
+        }
+        consultarAPI();
+    }, []);
+
+    return (
         <form>
-            <SelectMonedas/>
-            <SeleccionarCripto/>
+            <SelectMonedas />
+            <SeleccionarCripto />
             <Boton
                 type="submit"
                 value="Calcular"
@@ -46,5 +61,5 @@ const Formulario = () => {
         </form>
     );
 }
- 
+
 export default Formulario;
