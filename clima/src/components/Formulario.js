@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Error from './Error';
 
 const Formulario = ({busqueda,guardarBusqueda,guardarConsultar}) => {
@@ -75,6 +76,12 @@ const Formulario = ({busqueda,guardarBusqueda,guardarConsultar}) => {
             </div>
         </form>
     );
+}
+
+Formulario.propTypes ={
+    busqueda:PropTypes.object.isRequired,
+    guardarBusqueda:PropTypes.func.isRequired,
+    guardarConsultar:PropTypes.func.isRequired
 }
 
 export default Formulario;

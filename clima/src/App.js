@@ -35,14 +35,13 @@ function App() {
           guardarError(false);
         }
       }
-
-      //http://api.openweathermap.org/data/2.5/weather?q=guadalajara,mexico&appid=1c69ab7a70f7b1d748254c0fc63354ad
     }
-    consultarAPI();
+    consultarAPI(); /**-eslint-disable-next-line- desabilita algunas dependecias */
+    // eslint-disable-next-line
   }, [consultar]);
 
   let componente;
-  
+
   //carga condicional de componentes
   if(error){
     componente = <Error mensaje="No hay resultados"/>
