@@ -25,7 +25,7 @@ const Boton = styled.input`
 const Formulario = () => {
 
     //state del listado de criptomonedas 
-    const [listacripto,guardarCriptomonedas] = useState([]);
+    const [listacripto, guardarCriptomonedas] = useState([]);
 
     const MONEDAS = [
         { codigo: 'USD', nombre: 'Dolar de estados Unidos' },
@@ -38,7 +38,10 @@ const Formulario = () => {
     const [moneda, SelectMonedas] = useMoneda('Elige tu moneda', '', MONEDAS);
 
     //utilozar useCriptomoneda
-    const [criptomoneda, SeleccionarCripto] = useCriptomoneda('Elige tu Criptomoneda', '',listacripto);
+    const [criptomoneda, SeleccionarCripto] = useCriptomoneda('Elige tu Criptomoneda', '', listacripto);
+
+    //state error
+    const [error, guardarError] = useState(false);
 
     //ejecutar llamado a la API
     useEffect(() => {
@@ -50,8 +53,23 @@ const Formulario = () => {
         consultarAPI();
     }, []);
 
+    const cotizarMoneda = (e) => {
+        e.preventDefault();
+
+        if (moneda === '' || criptomoneda === '') {
+            guardarError(true);
+            return false;
+        }
+
+        //enviar datos al componente principal
+        guardarError(false);
+    }
+
     return (
-        <form>
+        <form
+            onSubmit={cotizarMoneda}
+        >
+            {error ? 'Error' : null}
             <SelectMonedas />
             <SeleccionarCripto />
             <Boton
