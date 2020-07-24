@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Formulario.module.css';
 import useSelect from '../hooks/useSelect';
 
@@ -43,4 +44,7 @@ const Formulario = ({guardarCategoria}) => {
     );
 }
 
+Formulario.propTypes={
+    guardarCategoria:PropTypes.func.isRequired
+}
 export default Formulario;
