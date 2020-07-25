@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Formulario from './components/Formlario';
 import ListadoImagenes from './components/ListadoImagenes';
+import Error from './components/Error';
 
 function App() {
 
@@ -17,33 +18,37 @@ function App() {
 
       const imagenesPorPagina = 30;
       const key = '17636869-386a91d620fde7af267292499';
-      const url = `https://pixabay.com/api/?key=${key}&q=${busqueda}&per_page=${imagenesPorPagina}`;
+      const url = `https://pixabay.com/api/?key=${key}&q=${busqueda}&per_page=${imagenesPorPagina}&page=${paginaactual}`;
 
       const respuesta = await fetch(url);
       const resultado = await respuesta.json();
-
+      console.log(resultado);
       guardarImagenes(resultado.hits);
 
       //guardar total de paginas
       const calcularTotalPaginas = Math.ceil(resultado.totalHits / imagenesPorPagina);
       guardarTotalPaginas(calcularTotalPaginas);
+
+      //mover pagina hacia arriba
+      const jumbotron = document.querySelector('.jumbotron');
+      jumbotron.scrollIntoView({behavior:'smooth'});
     }
     consultarApi();
-  }, [busqueda]);
+  }, [busqueda,paginaactual]);
 
-  const paginaAnterior = ()=>{
-    const nuevaPaginaActual= paginaactual -1;
+  const paginaAnterior = () => {
+    const nuevaPaginaActual = paginaactual - 1;
 
-    if(nuevaPaginaActual === 0) return;
+    if (nuevaPaginaActual === 0) return;
 
     guardarPaginaActual(nuevaPaginaActual);
   }
 
-  const paginaSiguiente = ()=>{
-    const nuevaPaginaActual= paginaactual +1;
+  const paginaSiguiente = () => {
+    const nuevaPaginaActual = paginaactual + 1;
 
-    if(nuevaPaginaActual > totalpaginas) return;
-    
+    if (totalpaginas === 0 || nuevaPaginaActual > totalpaginas) return;
+
     guardarPaginaActual(nuevaPaginaActual);
   }
 
@@ -55,21 +60,27 @@ function App() {
           guardarBusqueda={guardarBusqueda}
         />
       </div>
-      <ListadoImagenes
-        imagenes={imagenes}
-      />
+      {(totalpaginas === 0) ? <Error mensaje="Sin resultados"/>:null}
 
-      <button
-        type="button"
-        className="btn btn-info mr-1"
-        onClick={paginaAnterior}
-      >&laquo; Anterior</button>
+      <div className="row justify-content-center">
+        <ListadoImagenes
+          imagenes={imagenes}
+        />
+        {(totalpaginas === 0 || paginaactual === 1) ? null : (
+          <button
+            type="button"
+            className="btn btn-info mr-1"
+            onClick={paginaAnterior}
+          >&laquo; Anterior</button>
+        )}
 
-      <button
-        type="button"
-        className="btn btn-info"
-        onClick={paginaSiguiente}
-      >Siguiente &raquo;</button>
+        {(totalpaginas === 0 || paginaactual === totalpaginas) ? null : (
+          <button
+            type="button"
+            className="btn btn-info"
+            onClick={paginaSiguiente}
+          >Siguiente &raquo;</button>)}
+      </div>
     </div>
   );
 }
