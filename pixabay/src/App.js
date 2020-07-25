@@ -22,7 +22,7 @@ function App() {
 
       const respuesta = await fetch(url);
       const resultado = await respuesta.json();
-      console.log(resultado);
+      
       guardarImagenes(resultado.hits);
 
       //guardar total de paginas
