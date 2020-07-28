@@ -1,24 +1,31 @@
 import React, { useContext,useState } from 'react';
 import { CategoriasContext } from '../context/CategoriasContext';
+import {RecetasContext} from '../context/RecetasContext';
 
 const Formulario = () => {
 
-    const { categorias } = useContext(CategoriasContext);
     const [busqueda,guardarBusqueda] = useState({
         nombre:'',
         categoria:''
     });
     
+    const { categorias } = useContext(CategoriasContext); 
+    const {buscarRecetas} = useContext(RecetasContext);   
+
     const obtenerDatos = (e) =>{
         guardarBusqueda({
             ...busqueda,
             [e.target.name] : e.target.value
         })
     }
-
+    
     return (
         <form
             className="col-12"
+            onSubmit={e=>{
+                e.preventDefault();
+                buscarRecetas(busqueda)
+            }}
         >
             <fieldset className="text-center">
                 <legend>Busca bebidas por categoria o Ingrediente</legend>
@@ -50,7 +57,7 @@ const Formulario = () => {
                 </div>
                 <div className="col-md-4">
                     <input
-                        name="submit"
+                        type="submit"
                         className="btn btn-primary btn-block"
                         value="Buscar Recetas"
                     />
