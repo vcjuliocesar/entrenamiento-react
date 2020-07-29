@@ -3,22 +3,25 @@ import {Link} from 'react-router-dom';
 
 const Login = () => {
 
-    const [datos, guardarDatos] = useState({
+    const [usuario, guardarUsuario] = useState({
         email: '',
         password: ''
     });
 
     const onChange = (e) => {
-        guardarDatos({
-            ...datos,
+        guardarUsuario({
+            ...usuario,
             [e.target.name]: e.target.value
         });
     }
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log("submit...");
+        //validar que no haya campos vacios
+        
+        //pasarlo a la accion
     }
+    const {email,password} = usuario;
 
     return (
         <div className="form-usuario">
@@ -35,6 +38,7 @@ const Login = () => {
                             name="email"
                             placeholder="Tu email"
                             onChange={onChange}
+                            value={email}
                         />
                     </div>
                     <div className="campo-form">
@@ -45,6 +49,7 @@ const Login = () => {
                             name="password"
                             placeholder="Tu password"
                             onChange={onChange}
+                            value={password}
                         />
                     </div>
                     <div className="campo-form">
