@@ -1,29 +1,40 @@
-import React, { useContext,useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { CategoriasContext } from '../context/CategoriasContext';
-import {RecetasContext} from '../context/RecetasContext';
+import { RecetasContext } from '../context/RecetasContext';
 
 const Formulario = () => {
 
-    const [busqueda,guardarBusqueda] = useState({
-        nombre:'',
-        categoria:''
+    const [busqueda, guardarBusqueda] = useState({
+        nombre: '',
+        categoria: ''
     });
-    
-    const { categorias } = useContext(CategoriasContext); 
-    const {buscarRecetas,guardarConsultar} = useContext(RecetasContext);   
+    const[error,guardarError]= useState(false);
+    const { categorias } = useContext(CategoriasContext);
+    const { buscarRecetas, guardarConsultar } = useContext(RecetasContext);
 
-    const obtenerDatos = (e) =>{
+    const obtenerDatos = (e) => {
         guardarBusqueda({
             ...busqueda,
-            [e.target.name] : e.target.value
+            [e.target.name]: e.target.value
         })
     }
-    
+
+    const {nombre,categoria} = busqueda;
+
+    setTimeout(()=>{
+        guardarError(false);
+    },3000);
+
     return (
         <form
             className="col-12"
-            onSubmit={e=>{
+            onSubmit={e => {
                 e.preventDefault();
+                if(nombre.trim() === '' || categoria.trim() === ''){
+                    guardarError(true);
+                    return;
+                }
+                guardarError(false);
                 buscarRecetas(busqueda);
                 guardarConsultar(true);
             }}
@@ -63,6 +74,7 @@ const Formulario = () => {
                         value="Buscar Recetas"
                     />
                 </div>
+                {error ? <p className="col-12 alert alert-primary mt-4 text-center" role="alert">Todos los campos son obligatorios</p>:null}
             </div>
         </form>
     );
