@@ -8,7 +8,7 @@ const Sidebar = () => {
             <NuevoProyecto />
             <div className="proyectos">
                 <h2>Tus proyectos</h2>
-                <ListadoProyectos/>
+                <ListadoProyectos />
             </div>
         </aside>
     );
