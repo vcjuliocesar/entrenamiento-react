@@ -6,7 +6,7 @@ const ListadoTareas = () => {
         {nombre:'Elegir Plataforma',estado:true},
         {nombre:'Elegir Colores',estado:true},
         {nombre:'Elegir Plataformas de pago',estado:true},
-        {nombre:'Elegir Histing',estado:true}
+        {nombre:'Elegir Hosting',estado:true}
     ];
     return ( 
         <Fragment>
