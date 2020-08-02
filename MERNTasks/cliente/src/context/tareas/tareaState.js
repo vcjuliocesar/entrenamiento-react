@@ -2,7 +2,8 @@ import React,{useReducer} from 'react';
 import tareaContext from './tareaContext';
 import tareaReducer from './tareaReducer';
 import {
-    TAREAS_PROYECTO
+    TAREAS_PROYECTO,
+    AGREGAR_TAREA
 } from '../../types/index';
 
 const TareaSate = (props) => {
@@ -39,13 +40,21 @@ const TareaSate = (props) => {
             payload:proyectoId
         })
     }
-
+    
+    //agregar una tarea al proyecto seleccionado
+    const agregarTarea = (tarea)=>{
+        dispatch({
+            type:AGREGAR_TAREA,
+            payload:tarea
+        })
+    }
     return (
         <tareaContext.Provider
             value={{
                 tareas:state.tareas,
                 tareasproyecto:state.tareasproyecto,
-                obtenerTareas
+                obtenerTareas,
+                agregarTarea
             }}
         >
             {props.children}
