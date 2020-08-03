@@ -1,22 +1,34 @@
-import React,{useContext} from 'react';
+import React, { useContext } from 'react';
 import tareaContext from '../../context/tareas/tareaContext';
 import proyectoContext from '../../context/proyectos/proyectoContext';
 
 const Tarea = ({ tarea }) => {
     //obtener la funcion del contect de tarea
     const tareasContext = useContext(tareaContext);
-    const { eliminarTarea,obtenerTareas } = tareasContext;
-    
+    const { eliminarTarea, obtenerTareas, cambiarEstadoTarea } = tareasContext;
+
     const proyectosContext = useContext(proyectoContext);
     const { proyecto } = proyectosContext;
 
     //extraer el proyecto
-    const[proyectoActual] = proyecto;
+    const [proyectoActual] = proyecto;
     //funcion que se ejecuta cinaso el usuario presiona el btn eliminar tarea
     const tareaEliminar = (id) => {
         eliminarTarea(id);
         obtenerTareas(proyectoActual.id);
     }
+
+    //funcion que modifica el estado de lastareas
+
+    const cambiarEstado = (tarea) => {
+        if(tarea.estado){
+            tarea.estado = false;
+        }else{
+            tarea.estado = true;
+        }
+        cambiarEstadoTarea(tarea);
+    }
+
     return (
         <li className="tarea sombra">
             <p>{tarea.nombre}</p>
@@ -27,6 +39,7 @@ const Tarea = ({ tarea }) => {
                         <button
                             type="button"
                             className="completo"
+                            onClick={() => cambiarEstado(tarea)}
                         >Completo</button>
                     )
                     :
@@ -34,6 +47,7 @@ const Tarea = ({ tarea }) => {
                         <button
                             type="button"
                             className="incompleto"
+                            onClick={() => cambiarEstado(tarea)}
                         >Incompleto</button>
                     )
                 }
