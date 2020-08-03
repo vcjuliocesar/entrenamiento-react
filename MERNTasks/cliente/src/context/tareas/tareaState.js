@@ -7,7 +7,8 @@ import {
     VALIDAR_TAREA,
     ELIMINAR_TAREA,
     ESTADO_TAREA,
-    TAREA_ACTUAL
+    TAREA_ACTUAL,
+    ACTUALIZAR_TAREA
 } from '../../types/index';
 
 const TareaSate = (props) => {
@@ -84,6 +85,14 @@ const TareaSate = (props) => {
             payload:tarea
         })
     }
+
+    //edita Una tarea
+    const actualizarTarea = (tarea) => {
+        dispatch({
+            type:ACTUALIZAR_TAREA,
+            payload:tarea
+        })
+    }
     return (
         <tareaContext.Provider
             value={{
@@ -96,7 +105,8 @@ const TareaSate = (props) => {
                 validarTarea,
                 eliminarTarea,
                 cambiarEstadoTarea,
-                guardarTareaActual
+                guardarTareaActual,
+                actualizarTarea
             }}
         >
             {props.children}

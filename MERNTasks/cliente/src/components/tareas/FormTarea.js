@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import proyectoContext from '../../context/proyectos/proyectoContext';
 import tareaContext from '../../context/tareas/tareaContext';
 
@@ -9,18 +9,18 @@ const FormTarea = () => {
 
     //obtener la funcion del contect de tarea
     const tareasContext = useContext(tareaContext);
-    const { tareaseleccionada, agregarTarea, validarTarea, errortarea, obtenerTareas } = tareasContext;
+    const { tareaseleccionada, agregarTarea, validarTarea, errortarea, obtenerTareas,actualizarTarea } = tareasContext;
 
     //detecta si hay una tarea seleccionada
-    useEffect(()=>{
-        if(tareaseleccionada !== null){
+    useEffect(() => {
+        if (tareaseleccionada !== null) {
             guardarTarea(tareaseleccionada);
-        }else{
+        } else {
             guardarTarea({
                 nombre: ''
             });
         }
-    },[tareaseleccionada]);
+    }, [tareaseleccionada]);
     //state del formulario
     const [tarea, guardarTarea] = useState({
         nombre: ''
@@ -51,10 +51,18 @@ const FormTarea = () => {
             return;
         }
 
-        //agregar la nueva tarea al state  de tareas
-        tarea.proyectoId = proyectoActual.id;
-        tarea.estado = false;
-        agregarTarea(tarea);
+        //si es edición o es nueva tarea
+        if (tareaseleccionada === null) {
+            //agregar la nueva tarea al state  de tareas
+            tarea.proyectoId = proyectoActual.id;
+            tarea.estado = false;
+            agregarTarea(tarea);
+        }else{
+            //acuatliza tarea existente
+            actualizarTarea(tarea);
+        }
+
+
 
         //obtener y filtrar las tareas del proyecto actual
         obtenerTareas(proyectoActual.id);
@@ -84,7 +92,7 @@ const FormTarea = () => {
                     <input
                         type="submit"
                         className="btn btn-primario btn-submit btn-block"
-                        value={tareaseleccionada ? "Editar tarea":"Agregar Tarea"}
+                        value={tareaseleccionada ? "Editar tarea" : "Agregar Tarea"}
                     />
                 </div>
             </form>
