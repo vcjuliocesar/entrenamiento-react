@@ -5,7 +5,7 @@ import proyectoContext from '../../context/proyectos/proyectoContext';
 const Tarea = ({ tarea }) => {
     //obtener la funcion del contect de tarea
     const tareasContext = useContext(tareaContext);
-    const { eliminarTarea, obtenerTareas, cambiarEstadoTarea } = tareasContext;
+    const { eliminarTarea, obtenerTareas, cambiarEstadoTarea, guardarTareaActual } = tareasContext;
 
     const proyectosContext = useContext(proyectoContext);
     const { proyecto } = proyectosContext;
@@ -21,12 +21,18 @@ const Tarea = ({ tarea }) => {
     //funcion que modifica el estado de lastareas
 
     const cambiarEstado = (tarea) => {
-        if(tarea.estado){
+        if (tarea.estado) {
             tarea.estado = false;
-        }else{
+        } else {
             tarea.estado = true;
         }
         cambiarEstadoTarea(tarea);
+    }
+    
+    //agregar una atrea actual cuando el usuario intenta editarla
+
+    const selecconarTarea = (tarea)=>{
+        guardarTareaActual(tarea);
     }
 
     return (
@@ -56,6 +62,7 @@ const Tarea = ({ tarea }) => {
                 <button
                     type="button"
                     className="btn btn-primario"
+                    onClick={() => selecconarTarea(tarea)}
                 >Editar</button>
                 <button
                     type="button"
