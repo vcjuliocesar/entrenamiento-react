@@ -5,7 +5,8 @@ import {
     ELIMINAR_TAREA,
     ESTADO_TAREA,
     TAREA_ACTUAL,
-    ACTUALIZAR_TAREA
+    ACTUALIZAR_TAREA,
+    LIMPIARTAREA
 } from '../../types/index';
 
 export default (state, action) => {
@@ -41,6 +42,11 @@ export default (state, action) => {
             return{
                 ...state,
                 tareaseleccionada:action.payload
+            }
+        case LIMPIARTAREA:
+            return{
+                ...state,
+                tareaseleccionada:null
             }
         default:
             return state;
