@@ -1,3 +1,3 @@
 exports.crearUsuario = (req,resp) => {
-    console.log("creando usuario");
+    console.log(req.body);
 }
