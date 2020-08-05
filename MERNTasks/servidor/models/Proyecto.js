@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const ProyectoSchema = mongoose.Schema({
     nombre:{
-        nombre:String,
+        type:String,
         required:true,
         trim:true
     },
