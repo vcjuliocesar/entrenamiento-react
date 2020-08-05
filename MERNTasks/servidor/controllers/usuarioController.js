@@ -6,9 +6,9 @@ const jwt = require("jsonwebtoken");
 exports.crearUsuario = async (req, res) => {
     //validar si hay errores
     const errores = validationResult(req);
-    
-    if(!errores.isEmpty()){
-        return res.status(400).json({errores:errores.array()});
+
+    if (!errores.isEmpty()) {
+        return res.status(400).json({ errores: errores.array() });
     }
     //extraer email y password
     const { email, password } = req.body;
@@ -31,17 +31,17 @@ exports.crearUsuario = async (req, res) => {
 
         //Crear y firmar el JWT
         const payload = {
-            usuario:usuario.id
+            usuario: usuario.id
         }
         //firma el el JWT
-        jwt.sign(payload,process.env.SECRETA,{
-            expiresIn:3600
-        },(error,token)=>{
-            if(error) throw error;
+        jwt.sign(payload, process.env.SECRETA, {
+            expiresIn: 3600
+        }, (error, token) => {
+            if (error) throw error;
             //mensaje
-            res.json({token});
+            res.json({ token });
         });
-        
+
     } catch (error) {
         console.log(error);
         res.status(400).json({ msg: 'Hubo un error' });
