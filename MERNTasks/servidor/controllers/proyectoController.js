@@ -24,11 +24,45 @@ exports.crearProyecto = async (req, res) => {
 }
 
 exports.obtenerProyectos = async (req, res) => {
+    //Resvisar si hay errores
+    const errores = validationResult(req);
+
+    if (!errores.isEmpty()) {
+        return res.status(400).json({ errores: errores.array() });
+    }
     try {
-        const proyectos = await Proyecto.find({creador:req.usuario.id}).sort({creado:-1});
-        res.json({proyectos});
+        const proyectos = await Proyecto.find({ creador: req.usuario.id }).sort({ creado: -1 });
+        res.json({ proyectos });
     } catch (error) {
         console.log(error);
-        res.status(500).json({msg:'Hubo un error'});
+        res.status(500).send('Hubo un error');
+    }
+}
+
+exports.actualizarProyecto = async (req, res) => {
+    //Resvisar si hay errores
+    const errores = validationResult(req);
+
+    if (!errores.isEmpty()) {
+        return res.status(400).json({ errores: errores.array() });
+    }
+    const { nombre } = req.body;
+    const nuevoProyecto = {};
+
+    if (nombre) {
+        nuevoProyecto.nombre = nombre;
+    }
+
+    try {
+        //revisar el ID
+
+        //si el proyecto existe o no
+
+        //verificar el creador del proyecto
+
+        //actualizar el proyecto
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
     }
 }
