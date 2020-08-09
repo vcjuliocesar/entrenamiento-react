@@ -13,11 +13,14 @@ router.post('/',
     ],
     proyectoController.crearProyecto
 );
+
 //obtener proyectos
 router.get('/',
     auth,
     proyectoController.obtenerProyectos
 );
+
+
 //actualizar proyectos
 router.put('/:id',
     auth,
@@ -25,7 +28,13 @@ router.put('/:id',
         check('nombre','El nombre del proyecto es obligatorio').not().isEmpty()
     ],
     proyectoController.actualizarProyecto
-)
+);
+
+//Elimina un proyecto
+router.delete('/:id',
+    auth,
+    proyectoController.eliminarProyecto
+);
 
 
 module.exports = router;
