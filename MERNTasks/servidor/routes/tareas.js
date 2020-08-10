@@ -10,7 +10,8 @@ const { check } = require('express-validator');
 router.post('/',
     auth,
     [
-        check('nombre', 'El nombre es Obligatorio').not().isEmpty()
+        check('nombre', 'El nombre es Obligatorio').not().isEmpty(),
+        check('proyecto', 'El nombre del proyecto es Obligatorio').not().isEmpty()
     ],
     tareaController.crearTarea
 );
