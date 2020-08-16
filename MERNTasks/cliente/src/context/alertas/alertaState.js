@@ -21,7 +21,7 @@ const AlertaState = props => {
                 categoria
             }
         });
-
+        //despies de  segundos limpia la alerta
         setTimeout(()=>{
             dispatch({
                 type:OCULTAR_ALERTA
