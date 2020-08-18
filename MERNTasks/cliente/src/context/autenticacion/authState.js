@@ -25,14 +25,20 @@ const AuthState = (props) => {
     const registrarUsuarios = async (datos) => {
         try{
             const respuesta = await clieteAxios.post('/api/usuarios',datos);
-            console.log(respuesta);
+            console.log(respuesta.data);
             dispatch({
-                type:REGISTRO_EXITOSO
+                type:REGISTRO_EXITOSO,
+                payload:respuesta.data
             });
         }catch(error){
             console.log(error);
+            const alerta = {
+                msg:error.response.data.msg,
+                categoria: 'alerta-error'
+            }
             dispatch({
-                type:REGISTRO_ERROR
+                type:REGISTRO_ERROR,
+                payload:alerta
             });
         }
     }
