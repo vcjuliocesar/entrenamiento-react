@@ -1,11 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AlertaContext from '../../context/alertas/alertaContext';
-
+import AuthContext from '../../context/autenticacion/authContext';
 const NuevaCuenta = () => {
     //extraer los valores del context 
     const alertContext = useContext(AlertaContext);
     const { alerta, mostrarAlerta } = alertContext;
+
+    const authContext = useContext(AuthContext);
+    const {registrarUsuarios} = authContext;
 
     const [usuario, guardarUsuario] = useState({
         nombre: '',
@@ -13,6 +16,8 @@ const NuevaCuenta = () => {
         password: '',
         confirmar: ''
     });
+    
+    const { nombre, email, password, confirmar } = usuario;
 
     const onChange = (e) => {
         guardarUsuario({
@@ -42,8 +47,9 @@ const NuevaCuenta = () => {
             return;
         }
         //pasarlo a la accion
+        registrarUsuarios({nombre, email, password});
     }
-    const { nombre, email, password, confirmar } = usuario;
+    
     return (
         <div className="form-usuario">
             {alerta ? (<div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>) : null}
