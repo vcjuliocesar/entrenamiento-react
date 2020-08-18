@@ -10,6 +10,7 @@ import {
     LOGIN_ERROR,
     CERRAR_SESSION
 } from '../../types';
+import clienteAxios from '../../config/axios';
 
 
 const AuthState = (props) => {
@@ -30,6 +31,8 @@ const AuthState = (props) => {
                 type:REGISTRO_EXITOSO,
                 payload:respuesta.data
             });
+            //Obtener el usuario
+            usuarioAutenticado();
         }catch(error){
             console.log(error);
             const alerta = {
@@ -42,6 +45,25 @@ const AuthState = (props) => {
             });
         }
     }
+
+    //retorna el usuario autenticado
+    const usuarioAutenticado = async () => {
+        const token = localStorage.getItem('token');
+
+        if(token){
+            //TODO:funcion para enviar el token por header
+        }
+
+        try {
+            const respuesta = await clienteAxios.get('/api/auth');
+            console.log(respuesta);
+        } catch (error) {
+            dispatch({
+                type:LOGIN_ERROR
+            })
+        }
+    }
+
     return (
         <AuthContext.Provider
             value={{

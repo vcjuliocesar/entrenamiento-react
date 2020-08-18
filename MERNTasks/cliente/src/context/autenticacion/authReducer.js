@@ -7,23 +7,25 @@ import {
     CERRAR_SESSION
 } from '../../types';
 
-export default (state,action) => {
-    switch(action.type){
+export default (state, action) => {
+    switch (action.type) {
         case REGISTRO_EXITOSO:
-            localStorage.setItem('token',action.payload.token);
-            return{
+            localStorage.setItem('token', action.payload.token);
+            return {
                 ...state,
-                autenticado:true,
-                mensaje:null
+                autenticado: true,
+                mensaje: null
             }
+        case LOGIN_ERROR:
         case REGISTRO_ERROR:
-            return{
+            localStorage.removeItem('token');
+            return {
                 ...state,
-                token:null,
-                mensaje:action.payload
+                token: null,
+                mensaje: action.payload
             }
-     
-            default:
-                return state;
+
+        default:
+            return state;
     }
 }
