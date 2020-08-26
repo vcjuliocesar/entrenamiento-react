@@ -11,6 +11,7 @@ import {
     CERRAR_SESSION
 } from '../../types';
 import clienteAxios from '../../config/axios';
+import tokenAuth from '../../config/token';
 
 
 const AuthState = (props) => {
@@ -51,16 +52,21 @@ const AuthState = (props) => {
         const token = localStorage.getItem('token');
 
         if(token){
-            //TODO:funcion para enviar el token por header
+            tokenAuth(token);
         }
 
         try {
             const respuesta = await clienteAxios.get('/api/auth');
             console.log(respuesta);
+            dispatch({
+                type:OBTENER_USUARIO,
+                payload:respuesta.data.usuario
+            })
         } catch (error) {
+            console.log(error.response);
             dispatch({
                 type:LOGIN_ERROR
-            })
+            });
         }
     }
 
